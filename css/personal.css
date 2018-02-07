@@ -1,0 +1,15 @@
+@charset "utf-8";
+.content{
+	width:65%;
+	margin:70px auto 20px auto;
+	padding:30px;
+	line-height:50px;
+	background:#fff;
+}
+.title{
+	padding-left:30px;
+	line-height:50px;
+}
+.content table{
+	margin:32.5px auto;
+}

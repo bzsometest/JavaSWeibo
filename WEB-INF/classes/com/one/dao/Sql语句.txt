@@ -1,0 +1,76 @@
+/*本目录中有sql脚本，保存部分测试数据*/
+ /*sql注释，可以直接复制到sql命令*/
+ /*User表*/
+Create  table  user(
+uid int primary key auto_increment,
+username varchar(100) unique not null,
+userpass_encode  varchar(1024) not null,
+phone varchar(100) unique,
+email varchar(100) unique,
+type varchar(10)  DEFAULT 'common',
+sign varchar(255)  DEFAULT '暂无个人介绍',
+) ENGINE=InnoDB;
+
+
+ /*weibo微博表*/
+Create  table  weibo(
+wid int primary key auto_increment,
+ 	uid int,
+content varchar(1024) not null,
+time timestamp DEFAULT CURRENT_TIMESTAMP,
+img varchar(255),
+Foreign key (uid) references user(uid) ON UPDATE RESTRICT
+) ENGINE=InnoDB;
+
+ /*Discuss评论*/
+Create  table  discuss (
+did int primary key auto_increment,
+ 		wid int,
+		uid int,
+content varchar(255),
+time timestamp DEFAULT CURRENT_TIMESTAMP,
+Foreign key (wid) references weibo(wid) ON UPDATE RESTRICT,
+Foreign key (uid) references user(uid) ON UPDATE RESTRICT
+) ENGINE=InnoDB;
+
+
+ /*Fans粉丝表*/
+Create  table  fans (
+        fid int primary key auto_increment,
+        uid int, 
+        mid int,
+  		UNIQUE KEY `fans_sfdd1` (`uid`,`mid`),
+        Foreign key (uid) references user(uid) ON UPDATE RESTRICT,
+        Foreign key (mid) references user(uid) ON UPDATE RESTRICT
+        )ENGINE=InnoDB;
+
+/**找回用户密码表*/
+create table find_userpass(
+        fid int primary key auto_increment,
+        uid int,
+        phone_code varchar(20);
+        email_code varchar(100);
+        Foreign key (uid) references user(uid) ON UPDATE RESTRICT,
+)ENGINE=InnoDB;
+
+/**微博点赞表*/
+CREATE TABLE  weibo_zan(
+   zid INT PRIMARY KEY AUTO_INCREMENT,
+   wid INT,
+   uid INT,
+   UNIQUE KEY `weibo_zansfdd1` (`wid`,`uid`),
+   FOREIGN KEY (uid) REFERENCES user(uid) ON UPDATE RESTRICT,
+   FOREIGN KEY (wid) REFERENCES weibo(wid) ON UPDATE RESTRICT
+)ENGINE=INNODB;
+
+/**微博收藏表*/
+CREATE TABLE weibo_collect
+(
+  cid INT PRIMARY KEY AUTO_INCREMENT,
+  wid INT,
+  uid INT,
+  UNIQUE KEY `weibo_collectxx1` (`wid`,`uid`),
+  FOREIGN KEY (uid) REFERENCES user(uid) ON UPDATE RESTRICT,
+  FOREIGN KEY (wid) REFERENCES weibo(wid) ON UPDATE RESTRICT
+)ENGINE=INNODB;
+

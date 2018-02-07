@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+.content{
+	width:65%;
+	margin:70px auto 20px auto;
+	padding:30px;
+	line-height:50px;
+	background:#fff;
+}
+.title{
+	padding-left:30px;
+	line-height:50px;
+}
+.content h3{
+	text-align:center;
+	line-height:105px;
+	margin-bottom:55px;
+}
+.footer {
+	width:100%;
+    padding: 10px 10px;
+	text-align: center;
+	background:#fbfaf7;
+	line-height:30px;
+	color:#333;
+}

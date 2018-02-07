@@ -1,0 +1,28 @@
+@charset "utf-8";
+body,h1,h2,h3,h4,h5,h6,p,input,textarea{margin:0px; padding:0px;}
+ul,ol,li{margin:0px; padding:0px; list-style:none;}
+a{text-decoration:none; color: black; cursor: pointer;}
+textarea{text-decoration:none; color: black; outline: none;  overflow: hidden; resize: none;}
+img{margin:0px; padding:0px; border:none; display:block;}
+body{font-family:"宋体"; font-size: 14px;}
+.clear:after{content:''; display:block; clear:both;}
+.a{text-decoration:none; color: #0a8cd2; font-size: 12px; display: block;}
+.a:hover{cursor: pointer; text-decoration: underline;}
+input{border: none; outline: none; display: block; background: none;}
+input[type="button"]{cursor: pointer;}
+textarea:focus{border: 1px solid #1296db;}
+.pre{display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;}
+.center{display: block; margin: 0 auto;}
+.left{float: left; display: block;}
+.hidden{overflow: hidden; display: block;}
+.background{background-repeat: no-repeat; background-size: contain; background-position: center;}
+.border{border: 1px solid;}
+.top_line{width: 100%; height: 3px; background: url(../img/top_line_bg.png); border-bottom: 1px solid white;}
+.btn{background-color: #1296db; text-align: center; color: white; cursor: pointer;}
+.footer{margin: 10px auto 10px; line-height: 22px;}
+.footer_icon{width: 26px; height: 21px; background: url(../img/reg_ico.png) no-repeat 0 4px;}
+.footer p{font-size: 12px; margin-right: 20px; color: #6e9ab8;}
+.footer a{ color: #6e9ab8; margin-right: 5px;}
+.footer span{ color: #6e9ab8; font-family: "微软雅黑"; font-size: 12px;}
+.language{float: right;}
+.language select{margin-left: 10px;}

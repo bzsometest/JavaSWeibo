@@ -1,0 +1,97 @@
+@charset "utf-8";
+*{
+	padding:0px;
+	margin:0px;
+	list-style:none;
+	text-decoration:none;
+}
+body{
+	background:#97c8e7;
+	position: absolute;
+	width: 100%;
+	min-height: 100%;
+}
+.header{
+	width:100%;
+	min-width:1200px;
+	background:#fbfaf7;
+    position: fixed;
+    right:0;
+    top:0;
+	z-index:999;
+}
+.logo img{
+	float:left;
+	padding-left:100px;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background:fbfaf7;
+	overflow: hidden;
+}
+
+li {
+	float: right;
+}
+
+li a, .dropbtn {
+	display: inline-block;
+	color: #000;
+	text-align: center;
+	text-decoration: none;
+	padding: 17px 16px;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+	color:#f7671d;
+	border-bottom:2px solid #f7671d;
+}
+
+/*登录前可下拉的个人中心*/
+.dropdown {
+	display: inline-block;
+	float:right;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background:#f9f9f9;
+	min-width: 96px;
+}
+
+.dropdown-content a {
+	display: block;
+	color: black;
+	padding: 10px 15px;
+	text-decoration:none;
+}
+
+.dropdown-content a:hover {
+	color:#f7671d;
+}
+
+.dropdown:hover .dropdown-content{
+	display: block;
+}
+.content{
+	width:70%;
+	margin:70px auto 110px auto;
+	overflow:hidden;
+}
+.footer {
+	width:100%;
+	height:90px;
+	text-align: center;
+	line-height:30px;
+	font-size:14px;
+	padding:10px 10px 0 10px;
+	background:#fff;
+	color:#666;
+	position: absolute;
+	bottom: 0px;
+	overflow:hidden;
+}

@@ -1,0 +1,62 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../images/favicon.ico"
+	type="image/x-icon" />
+<title>管理员登录</title>
+<link href="../css/login.css" rel="stylesheet" />
+<link href="../css/base.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/login.js"></script>
+</head>
+
+<body style="background: #f8f8f8;">
+	<!--顶部导航栏-->
+	<!--顶部导航栏-->
+	<div class="header">
+		<!--顶部导航栏logo-->
+		<div class="logo">
+			<img src="../images/weibo.png" />
+		</div>
+		<!--导航菜单-->
+		<ul>
+
+			<li><a href="./">管理员登录</a></li>
+			<li><a href="../">微博首页</a></li>
+		</ul>
+	</div>
+	<!--登录背景-->
+	<div class="login_bg"></div>
+	<!--登录盒子-->
+	<div id="login" class="login">
+		<!--登录表单-->
+		<form name="loginForm" class="login_content" action="login.action"
+			method="post">
+			<!--登录内容区-->
+			<div class="container">
+				<input type="text" placeholder="管理员账号" name="account"
+					class="account" id="account" /> <input type="password"
+					placeholder="管理员的密码" name="userpass" class="userpass" id="userpass" />
+
+				<button type="submit" onclick="saveInfo(event);">登录</button>
+				<a id="result" style="color: red;"></a>
+			</div>
+		</form>
+	</div>
+	<!--底部信息栏-->
+	<div class="footer">
+		<p>
+			微博客服客服热线 4000-960-960&nbsp;&nbsp;&nbsp;微博客服邮箱 <a
+				href="mailto:kf@weibo.com">kf@weibo.com</a>
+		</p>
+		<p>
+			Copyright © 2009-2017 WEIBO <a href="../about.html" title="点击查看 关于微博">成都创客菁英网络技术有限公司</a>
+			蜀公网安备11000002000019号
+		</p>
+		<p>
+			<a href="../about.html" title="点击查看 关于微博">菁英微博 - 第1组 - &nbsp;版权所有</a>
+		</p>
+	</div>
+</body>
+
+</html>

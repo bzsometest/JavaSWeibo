@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>菁英微博首页</title>
+<meta charset="utf-8">
+<link rel="shortcut icon" type="icon" href="img/logo.jpg">
+<link rel="stylesheet" type="text/css" href="css/common.css">
+<link rel="stylesheet" type="text/css" href="css/page.css">
+<link rel="stylesheet" type="text/css" href="css/login1.css">
+<script type="text/javascript" src="js/exio.js"></script>
+<script type="text/javascript" src="js/M_ajax.js"></script>
+<script type="text/javascript" src="js/trim.js"></script>
+<script type="text/javascript" src="js/login.js"></script>
+<style type="text/css">
+ .icon_fav{background-image: url(img/icon_fav_hover.png);}
+</style>
+<script type="text/javascript">
+	var user = false;
+	var username = "";
+	function getUser() {
+		var url = "getUser.do";
+		ajax.post(url).then(function(response) {
+			var res = response.responseText;
+			var json = eval(res);
+			var obj = json.pop();
+			user = obj.state;
+			if (user == true) {
+				username = obj.username;
+				ex("#mycenter").value = obj.username;
+			} else {
+				username = ""
+				ex("#mycenter").value = "个人中心";
+			}
+
+		});
+	}
+	function rev_click(obj) {
+		var review_area = obj.parentNode.parentNode;
+		var revs = review_area.childNodes;
+		var box = document.createElement("div");
+		box.setAttribute("class", "review_area width hidden clear");
+		if (revs.length >= 2) {
+			review_area.lastChild.remove();
+		} else if (revs.length == 1) {
+			if (user == true) {
+				box.innerHTML = '<div class="review_area width hidden clear"><form onsubmit="return rev_send(this)" class="review_pub hidden clear" name="review" action="discussAdd.do"><span class="head_img background left"></span><textarea type="text left" oninput="rev_text(this)" rows="1" name="rev_cont"></textarea><input type="submit" class="review_btn btn" value="提交"></form></div>';
+				review_area.appendChild(box);
+			}
+			var url = "discuss.do";
+			var wid = review_area.parentNode.firstChild;
+			ajax
+					.post(url, {
+						wid : wid.value
+					})
+					.then(
+							function(response) {
+								var res = response.responseText;
+								var dis = eval(res);
+								for (var i = 0; i < dis.length; i++) {
+									var review = dis[i];
+									var rev_other = document
+											.createElement("div");
+									rev_other.innerHTML = '<div class="review_others hidden clear"><a class="left clear" href="userWeibo.do?uid='+review.uid+'"><span class="head_img background left"></span><span class="left">'+ review.username+'：</span></a><p class="left">'+ review.content + '</p></div>';
+									box.appendChild(rev_other);
+								}
+								review_area.appendChild(box);
+							});
+		}
+	}
+
+	function rev_text(obj) {
+		obj.style.height = 'auto';
+		obj.style.height = obj.scrollHeight + 'px';
+		var pub_btn = obj.parentNode.lastChild;
+		if (obj.value != "") {
+			pub_btn.style.opacity = "1";
+		} else {
+			pub_btn.style.opacity = "0.3";
+		}
+	}
+
+	function rev_send(obj) {
+		var url = obj.action;
+		var wid = obj.parentNode.parentNode.parentNode.parentNode.firstChild;
+		var text = obj.rev_cont;
+		if (trim(text.value) != "") {
+			var pos = obj.parentNode;
+			var name = username + "：";
+			var box = document.createElement("div");
+			box.innerHTML = '<div class="review_others hidden clear"><span class="head_img background left"></span><a class="left">'
+					+ name + '</a><p class="left">' + text.value + '</p></div>';
+			pos.appendChild(box);
+			try {
+				ajax.post(url, {
+					wid : wid.value,
+					content : text.value
+				}).then(function(response) {
+				});
+			} catch (err) {
+			}
+			text.value = "";
+		} else {
+			text.value = "";
+			text.placeholder = "评论内容不能为空";
+		}
+		return false;
+	}
+
+	function attensub(obj) {
+		var url = obj.action;
+		var wid = obj.parentNode.parentNode.firstChild;
+		var focuson = obj.focuson;
+		var focubtn = obj.focubtn;
+		if (user == true) {
+			if (focuson.value == "true") {
+				focubtn.value = "+关注";
+				focuson.value = "false";
+			} else {
+				focubtn.value = "取消关注";
+				focuson.value = "true";
+			}
+			try {
+				ajax.post(url, {
+					wid : wid.value,
+					focuson : focuson.value
+				}).then(function(response) {
+				});
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			document.getElementById('login1').style.display = 'block';
+		}
+
+		return false;
+	}
+
+	function weiboshow() {
+		var url = "weiboCollect.do";
+		ajax
+				.post(url)
+				.then(
+						function(response) {
+							var res = response.responseText;
+							var weibos = eval(res);
+							//	var weibos_order=weibos.reverse();
+							for (var i = 0; i < weibos.length; i++) {
+								var weibo = weibos[i];
+								var focuson = "+关注";
+								if (weibo.focuson == true) {
+									focuson = "取消关注";
+								}
+								var fav = "收藏";
+								var fav_icon = "icon_fav"
+								if (weibo.iscollect == true) {
+									fav = "已收藏"
+									fav_icon = "icon_faved"
+								}
+								var zan_icon = "icon_zan";
+								if (weibo.iszan == true) {
+									zan_icon = "icon_zaned";
+								}
+								var box = document.createElement("div");
+								box.innerHTML = '<div class="weibo width hidden clear"><input type="hidden" name="wid" value="'+weibo.wid+'"><div class="weibo_tit clear"><a href="userWeibo.do?uid='
+								+ weibo.uid
+								+ '"><span class="head_img background left"></span><span>'
+										+ weibo.username
+										+ '</sapn></a><form class="attention clear" onsubmit="return attensub(this)" action="fansAdd.do"><input type="hidden" name="focuson" value="'+weibo.focuson+'"><input type="submit" class="atten_btn background left" name="focubtn" value="'+focuson+'"></form></div><div class="time"><a>'
+										+ weibo.time
+										+ '</a></div><div class="weibo_cont"><p class="pre">'
+										+ weibo.content
+										+ '</p><img src="'+weibo.img+'"><input type="button" class="a" value="展开全文" onclick=textview(this)></div><div class="hidden clear"><ul class="weibo_handle hidden clear"><li class="fav left" onclick="collect(this)"><input type="hidden" class="collect" value="'+weibo.iscollect+'"><div class="handle hidden clear"><span class="'+fav_icon+' left background"></span><a class="left">'
+										+ fav
+										+ '</a></div></li><li class="left" onclick="forward(this)"><div class="handle hidden clear"><span class="icon_resend left background"></span><a class="left" href="forward.do?wid='+weibo.wid+'">转发</a></div></li><li class="left" onclick="rev_click(this)"><div class="handle hidden clear"><span class="icon_review left background"></span><a class="left">评论</a></div></li><li class="zan left" onclick="zan(this)"><input type="hidden" class="iszan" value="'+weibo.iszan+'"><div class="handle hidden clear"><span class="'+zan_icon+' left background"></span><a class="left">赞</a><input type="button" class="zancount left" value="'+weibo.zancount+'"></div></li></ul></div><div>';
+								ex(".weibo_item").appendChild(box);
+							}
+						});
+	}
+
+	function textview(obj) {
+		var nodes = obj.parentNode.childNodes;
+		var text = nodes[0];
+		var img = nodes[1];
+		var btn = nodes[2];
+		console.log(nodes.length);
+		if (btn.value == "展开全文") {
+			text.style = "-webkit-line-clamp:30";
+			img.style.display = "block";
+			btn.value = "收起全文";
+		} else {
+			text.style = "-webkit-line-clamp:4";
+			img.style.display = "none";
+			btn.value = "展开全文";
+		}
+	}
+
+	function forward(obj) {
+		if (user == true) {
+			var forw=obj.querySelector("a");
+			forw.click();
+		} else {
+			document.getElementById('login1').style.display = 'block';
+		}
+
+	}
+	function collect(obj) {
+		if (user == true) {
+			var collect = obj.querySelector(".collect");
+			var fav_icon = obj.querySelector(".handle span");
+			var fav = obj.querySelector(".handle a");
+			if (collect.value == "true") {
+				collect.value = "false";
+				fav_icon.className = "icon_fav left background"
+				fav.innerHTML = "收藏";
+			} else {
+				collect.value = "true";
+				fav_icon.className = "icon_faved left background"
+				fav.innerHTML = "已收藏";
+			}
+			var url = "addCollect.do";
+			var wid = obj.parentNode.parentNode.parentNode.firstChild;
+			ajax.post(url, {
+				wid : wid.value,iscollect:collect.value
+			}).then(function(response) {
+			});
+		} else {
+			document.getElementById('login1').style.display = 'block';
+		}
+
+	}
+	function zan(obj) {
+		if (user == true) {
+			var iszan = obj.querySelector(".iszan");
+			var zan_icon = obj.querySelector(".handle span");
+			var zancount = obj.querySelector(".handle .zancount");
+			if (iszan.value == "true") {
+				iszan.value = "false";
+				zan_icon.className = "icon_zan left background"
+				zancount.value--;
+			} else {
+				iszan.value = "true";
+				zan_icon.className = "icon_zaned left background"
+				zancount.value++;
+			}
+			var url = "addZan.do";
+			var wid = obj.parentNode.parentNode.parentNode.firstChild;
+			ajax.post(url, {
+				wid : wid.value,iszan : iszan.value
+			}).then(function(response) {
+			});
+		} else {
+			document.getElementById('login1').style.display = 'block';
+		}
+
+	}
+	function imgpop() {
+		var files = ex(".img");
+		files.click();
+		files.accept = "image/*";
+	}
+	function imginput(files) {
+		if (files.length) {
+			var file = files[0];
+			var reader = new FileReader();
+			reader.onload = function() {
+				ex(".imgshow").innerHTML = "";
+				var imgview = document.createElement("img");
+				imgview.setAttribute("src", this.result);
+				ex(".imgshow").appendChild(imgview);
+			}
+			reader.readAsDataURL(file);
+		}
+	}
+	window.onload = function() {
+
+		getUser();
+		ex(".mycenter").onmouseover = function() {
+			if (user == true) {
+				ex("#haved").style.visibility = "visible";
+				ex("#haved").style.opacity = "0.7";
+			} else {
+				ex("#having").style.visibility = "visible";
+				ex("#having").style.opacity = "0.7";
+			}
+		}
+		ex(".mycenter").onmouseleave = function() {
+			ex("#haved").style.visibility = "hidden";
+			ex("#haved").style.opacity = "0";
+			ex("#having").style.visibility = "hidden";
+			ex("#having").style.opacity = "0";
+		}
+		ex(".search input").onfocus = function() {
+			ex(".search").style.borderColor = "#1296db";
+			ex(".search").style.backgroundColor = "#fff";
+		};
+		ex(".search input").onblur = function() {
+			ex(".search").style.borderColor = "#ccc";
+			ex(".search").style.backgroundColor = "#f2f2f5";
+		};
+		ex(".publish textarea").oninput = function() {
+			if (this.scrollHeight > 80) {
+				this.style.height = 'auto';
+				this.style.height = this.scrollHeight + 'px';
+			}
+			if (this.value != "") {
+				ex(".pub_btn").style.opacity = "1";
+			} else {
+				ex(".pub_btn").style.opacity = "0.3";
+			}
+		};
+
+		ex(".pub_btn").onclick = function() {
+			if (ex(".publish textarea").value != "") {
+				if (user == true) {
+					document.publish.submit();
+				} else {
+					document.getElementById('login1').style.display = 'block';
+				}
+
+			} else {
+				ex(".publish textarea").placeholder = "你所发布的微博内容不能为空";
+			}
+		};
+		weiboshow();
+	};
+</script>
+</head>
+<body>
+	<div class="top">
+		<div class="top_line background"></div>
+		<div class="nav center hidden clear">
+			<span class="top_logo background left"></span>
+			<div class="search left clear">
+				<input type="text" class="left" name="" placeholder="搜索微博、找人">
+				<span class="search_icon background left"></span>
+			</div>
+			<div class="nav_bar hidden clear">
+				<ul class="nav_list hidden clear">
+					<li class="left hidden clear"><a
+						class="home left hidden clear" href="./"><span
+							class="icon_home background left"></span>首页</a></li>
+					<li class="left hidden clear"><a
+						class="combar left hidden clear" href="myWeibo.do"><span
+							class="icon_webo background left"></span>我的微博</a></li>
+					<li class="left hidden clear">
+						<a class="combar left hidden clear" href="myFollow.do">
+						<span class="icon_care background left"></span>我的关注</a>
+					</li>
+					<li class="left hidden clear">
+						<a class="select combar left hidden clear" href="myCollect.do">
+						<span class="icon_fav background left"></span>我的收藏</a>
+					</li>
+					<li class="mycenter left hidden clear"><a
+						class="combar left hidden" href="userCenter.do"> <span
+							class="icon_mycenter background left"></span> <input
+							type="button" value="个人中心" id="mycenter">
+					</a>
+						<div class="usercenter" id="haved">
+							<a href="userCenter.do"> <input type="button" value="个人信息"></a>
+							<a href="loginOut.do"><input type="button" value="注销"></a>
+						</div>
+						<div class="usercenter" id="having">
+							<a><input type="button" value="登录"
+								onclick="document.getElementById('login1').style.display='block'" /></a>
+							<a href="login/register.html"><input type="button" value="注册"></a>
+							<a href="about.html"><input type="button" value="关于"></a>
+						</div></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="top_space"></div>
+	<!--登录窗口 默认隐藏-->
+	<div id="login1" class="login1">
+		<!--登录表单-->
+		<form name="loginForm" class="login1_content move"
+			action="login.action" method="post">
+			<!--登录-->
+			<div class="container">
+				<input type="text" placeholder="邮箱/手机号/用户名" name="account"
+					class="account" id="account" />
+				<!--ajax预留信息-->
+				<p></p>
+
+				<input type="password" placeholder="请输入正确的密码" name="userpass"
+					class="userpass" id="userpass" />
+				<!--ajax预留信息-->
+				<p></p>
+
+				<button type="submit" onClick="saveInfo(event);" class="button">登录</button>
+				<input type="checkbox" checked="checked" class="left" style="margin-top: 4px;" /> 记住密码 <span
+					id="result" style="float: right;"></span>
+			</div>
+			<!--取消登录&注册&找回密码-->
+			<div class="container" style="background-color: #f1f1f1">
+				<button type="button"
+					onClick="document.getElementById('login1').style.display='none'"
+					class="cancelbtn">取消登录</button>
+				<span class="psw"><a href="findPW/">找回密码</a></span>
+			</div>
+		</form>
+	</div>
+	<div class="content width center hidden clear">
+		<form class="publish width hidden clear" name="publish"
+			action="weiboAdd.action" enctype="multipart/form-data" method="post">
+			<textarea class="center inp_style inp_font" rows="5" name="content"></textarea>
+			<div class="clear">
+				<ul class="pub_fun left clear">
+					<li class="image left" onclick="imgpop()"><input type="file"
+						name="img" class="img" onchange="imginput(this.files)"> <span
+						class="icon_img background left"></span> <a>图片</a></li>
+				</ul>
+				<div class="pub_btn btn">发布</div>
+			</div>
+			<div class="imgshow hidden"></div>
+		</form>
+	</div>
+	<div class="weibo_item width center hidden clear"></div>
+	<div class="footer width center hidden clear">
+		<div class="com center clear">
+			<span class="footer_icon background left"></span>
+			<p class="left"><a href="about.html" title="点击查看 关于微博">成都创客菁英网络技术有限公司</a></p>
+			<a class="a left" target="_blank">蜀网文[2011]0398-130号</a> <a
+				href="admin/" class="a left" target="_blank">蜀ICP备12002058号</a>
+		</div>
+		<div class="language width clear">
+			<span>Copyright © 2009-2017 WEIBO V2.1</span> <select>
+				<option>简体中文</option>
+				<option>中文(台湾)</option>
+				<option>中文(香港)</option>
+				<option>English</option>
+			</select>
+		</div>
+	</div>
+</body>
+</html>

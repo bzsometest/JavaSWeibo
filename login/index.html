@@ -1,0 +1,79 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../images/favicon.ico"
+	type="image/x-icon" />
+<title>登录微博</title>
+<link href="../css/login.css" rel="stylesheet" />
+<link href="../css/base.css" rel="stylesheet" />
+<script type="text/javascript" src="../js/login.js"></script>
+<style type="text/css">
+table td {
+	padding: 10px 0;
+}
+
+table td input {
+	height: 24px;
+}
+
+.header ul {
+	padding: 0 28px;
+}
+</style>
+</head>
+
+<body style="background: #f8f8f8;">
+	<!--顶部导航栏-->
+	<div class="header">
+		<!--顶部导航栏logo-->
+		<div class="logo">
+			<img src="../images/weibo.png" />
+		</div>
+		<!--导航菜单-->
+		<ul>
+			<!--登录后可下拉的个人中心，默认隐藏display:none;登陆后display:inline-block;-->
+			<li><a href="../userCenter.do">个人中心</a></li>
+			<li><a href="../myFollow.do">我的关注</a></li>
+			<li><a href="../myWeibo.do">个人微博</a></li>
+			<li><a href="../">微博首页</a></li>
+		</ul>
+
+	</div>
+
+
+	<!--登录背景-->
+	<div class="login_bg"></div>
+	<!--登录盒子-->
+	<div id="login" class="login">
+		<!--登录表单-->
+		<form class="login_content" name="loginForm" action="login.action"
+			method="post">
+			<!--登录内容区-->
+			<div class="container">
+				<input type="text" placeholder="邮箱/手机号/用户名" name="account"
+					class="account" id="account" /> <input type="password"
+					placeholder="请输入正确的密码" name="userpass" class="userpass"
+					id="userpass" />
+
+				<button type="submit" onclick="saveInfo(event);">登录</button>
+
+				<p id="result" style="color: red; text-align: center;height: 20px;">
+				<p>
+
+					<a href="../findPW/">找回密码</a> <a style="float: right;"
+						style="float:right;" href="register.html">立即注册!</a>
+			</div>
+		</form>
+	</div>
+	<!--底部信息栏-->
+	<div class="footer">
+		<p>
+			微博客服客服热线 4000-960-960&nbsp;&nbsp;&nbsp;微博客服邮箱 <a
+				href="mailto:kf@weibo.com">kf@weibo.com</a>
+		</p>
+		<p>Copyright © 2009-2017 WEIBO <a href="about.html" title="点击查看 关于微博">成都创客菁英网络技术有限公司</a> 蜀公网安备11000002000019号</p>
+		<p><a href="about.html" title="点击查看 关于微博">菁英微博 - 第1组 - &nbsp;版权所有</a></p>
+	</div>
+</body>
+
+</html>

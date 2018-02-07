@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+author:exio
+date:2017-12-29
+ -->
+<head>
+<title>微博注册-手机注册</title>
+<meta charset="utf-8">
+<link rel="shortcut icon" type="icon" href="../img/logo.jpg">
+<link rel="stylesheet" type="text/css" href="../css/common.css">
+<link rel="stylesheet" type="text/css" href="../css/signup.css">
+<script type="text/javascript" src="../js/exio.js"></script>
+<script type="text/javascript" src="../js/M_ajax.js"></script>
+<style type="text/css">
+.mobile_icon {
+	width: 20px;
+	height: 23px;
+	background: url(../img/methods.png) no-repeat 0 -23px;
+	margin-right: 9px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.flag {
+	width: 27px;
+	height: 12px;
+	padding: 8px 4px;
+	display: block;
+	background: url(../img/reg_flag.png) no-repeat 5px 8px;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	border-right: none;
+}
+
+.flag:hover {
+	background-color: #f2f2f2;
+}
+</style>
+<script type="text/javascript">
+	window.onload = function() {
+		var mobile_true = false;
+		ex(".acc_code").onfocus = function() {
+			ex(".acc_inp").style.border = "1px solid #ff9b01";
+			ex("#acc_warn").style.display = "block";
+			ex("#acc_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -200px";
+			ex("#acc_warn p").style.color = "#000";
+			ex("#acc_warn p").innerHTML = "请输入手机号码";
+		}
+		ex(".acc_code").onblur = function() {
+			ex(".acc_inp").style.border = "1px solid #ccc";
+			var patrn = /^1[3|4|5|6|7|8|9][0-9]\d{4,8}$/;
+			if (ex(".acc_code").value != "") {
+				var patrn_true = patrn.test((ex(".acc_code").value));
+				if (patrn_true == true) {
+					var mobile_url = "isHavePhone.do?value="
+							+ ex(".acc_code").value;
+					ajax
+							.post(mobile_url)
+							.then(
+									function(response) {
+										var mobile_acc = response.responseText;
+										var mobile_obj = eval(mobile_acc);
+										var mobile_check = mobile_obj.pop();
+										if (mobile_check.value == true) {
+											ex("#acc_warn p").innerHTML = "";
+											ex("#acc_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 0px";
+											mobile_true = true;
+										} else {
+											ex("#acc_warn p").style.color = "#F00";
+											ex("#acc_warn p").innerHTML = "手机号已注册！";
+											ex("#acc_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+											mobile_true = false;
+										}
+									});
+				} else {
+					ex("#acc_warn p").style.color = "#F00";
+					ex("#acc_warn p").innerHTML = "请输入正确的手机号码";
+					ex("#acc_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+				}
+			} else {
+				ex("#acc_warn p").style.color = "#F00";
+				ex("#acc_warn p").innerHTML = "请输入手机号码";
+				ex("#acc_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+			}
+		}
+
+		var pass_true = false;
+		ex(".pass").onfocus = function() {
+			ex("#pass_inp").style.border = "1px solid #ff9b01";
+			ex("#pass_warn").style.display = "block";
+			ex("#pass_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -200px";
+			ex("#pass_warn p").style.color = "#000";
+			ex("#pass_warn p").innerHTML = "请设置密码";
+		}
+		ex(".pass").onblur = function() {
+			ex("#pass_inp").style.border = "1px solid #ccc";
+			var patrn = /^[a-zA-Z0-9\-\|\#\$\%\^\*\.\~\+]{6,12}$/;
+			if (ex(".pass").value != "") {
+				pass_true = patrn.test((ex(".pass").value));
+				if (pass_true == true) {
+					ex("#pass_warn p").innerHTML = "";
+					ex("#pass_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 0px";
+				} else {
+					ex("#pass_warn p").style.color = "#F00";
+					ex("#pass_warn p").innerHTML = "密码位数为6-16位";
+					ex("#pass_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+				}
+			} else {
+				ex("#pass_warn p").style.color = "#F00";
+				ex("#pass_warn p").innerHTML = "请设置密码";
+				ex("#pass_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+			}
+		}
+
+		var user_true = false;
+		ex("#user").onfocus = function() {
+			ex("#user_inp").style.border = "1px solid #ff9b01";
+			ex("#user_warn").style.display = "block";
+			ex("#user_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -200px";
+			ex("#user_warn p").style.color = "#000";
+			ex("#user_warn p").innerHTML = "请输入用户名";
+		}
+		ex("#user").onblur = function() {
+			ex("#user_inp").style.border = "1px solid #ccc";
+			if (ex("#user").value != "") {
+				var patrn = /^[0-9\-\|\#\$\%\^\*\.\~\+]+/;
+				if (patrn.test(ex("#user").value) == false) {
+					var user_url = "isHaveUsername.do?value="
+							+ ex("#user").value;
+					ajax
+							.post(user_url)
+							.then(
+									function(response) {
+										var email_user = response.responseText;
+										var user_obj = eval(email_user);
+										var user_check = user_obj.pop();
+										if (user_check.value == true) {
+											ex("#user_warn p").innerHTML = "";
+											ex("#user_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 0px";
+											user_true = true;
+										} else {
+											ex("#user_warn p").style.color = "#F00";
+											ex("#user_warn p").innerHTML = "用户名已存在";
+											ex("#user_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+											user_true = false;
+										}
+									});
+				} else {
+					ex("#user_warn p").style.color = "#F00";
+					ex("#user_warn p").innerHTML = "用户名不能以数字和特殊字符开头";
+					ex("#user_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+					user_true = false;
+				}
+			} else {
+				ex("#user_warn p").style.color = "#F00";
+				ex("#user_warn p").innerHTML = "请输入用户名";
+				ex("#user_warn span").style.background = "url(../img/ico_warn.png) no-repeat 0 -250px";
+			}
+		}
+		ex(".havein").onclick = function() {
+			if (mobile_true && pass_true && user_true) {
+				document.mobile_sign.submit();
+			} else {
+				alert("请完善注册信息");
+			}
+		}
+
+		ex(".flag").onclick = function() {
+			alert("暂不支持其他地区登录");
+		}
+		ex(".language select").onclick = function() {
+			alert("暂不支持其他语言");
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="top_line background"></div>
+	<div class="top width background center">
+		<span class="top_logo background center"></span>
+	</div>
+	<div class="content width center height clear">
+		<div class="tab">
+			<a href="register.html">邮箱注册</a><span>|</span> <a class="tab_select"
+				href="register-phone.html">手机注册</a>
+		</div>
+		<div class="sign_mes width hidden">
+			<div class="sign_imfor left hidden clear">
+				<form name="mobile_sign" action="register.action" method="post">
+					<div class="infor hidden clear">
+						<div class="tit left">
+							<span class="mobile_icon"></span> <a>*</a> <label>手机:</label>
+						</div>
+						<div class="inp left clear">
+							<span class="flag left"></span>
+							<div class="acc_inp inp_style left clear">
+								<span class="inp_font left">0086</span> <input type="text"
+									class="acc_code inp_font left" maxlength="11"
+									placeholder="请输入您的手机号" name="phone">
+							</div>
+						</div>
+						<div class="inp_warn left clear" id="acc_warn">
+							<span class="left"></span>
+							<p class="left"></p>
+						</div>
+					</div>
+					<div class="sign_method hidden clear">
+						<p class="left">或使用</p>
+						<a class="a left" href="register.html">邮箱注册</a>
+					</div>
+					<div class="infor hidden clear">
+						<div class="tit left">
+							<a>*</a> <label>设置密码:</label>
+						</div>
+						<div class="inp inp_style left clear" id="pass_inp">
+							<input type="password" class="pass inp_font left" maxlength="16"
+								placeholder="请输入密码" name="userpass">
+						</div>
+						<div class="inp_warn left clear" id="pass_warn">
+							<span class="left"></span>
+							<p class="left"></p>
+						</div>
+					</div>
+					<div class="infor hidden clear">
+						<div class="tit left">
+							<a>*</a> <label>用户名:</label>
+						</div>
+						<div class="inp inp_style left clear" id="user_inp">
+							<input type="text" class="inp_width inp_font left" id="user"
+								maxlength="16" placeholder="请输入用户名" name="username">
+						</div>
+						<div class="inp_warn left clear" id="user_warn">
+							<span class="left"></span>
+							<p class="left"></p>
+						</div>
+					</div>
+					<div class="havein inp clear">立即注册</div>
+				</form>
+				<div class="agreement">
+					<a class="a" target="_blank" href="agreement.html">微博服务使用协议</a> <a
+						class="a" target="_blank">微博个人信息保护政策</a> <a class="a"
+						target="_blank">全国人大常委会关于加强网络信息保护的决定</a>
+				</div>
+			</div>
+			<div class="help hidden clear">
+				<div class="turn_login hidden clear">
+					<span class="left">已有账号,</span> <a class="a" href="../login/">直接登录»</a>
+				</div>
+				<p>微博注册帮助</p>
+				<ul class="sign_help hidden clear">
+					<li class="hidden clear"><span class="left">1</span> <a
+						class="a left" target="_blank">微博注册操作指南</a></li>
+					<li class="hidden clear"><span class="left">2</span> <a
+						class="a left" target="_blank">了解菁英微博的有关内容</a></li>
+					<li class="hidden clear"><span class="left">3</span> <a
+						class="a left" target="_blank" href="../about.html">关于菁英微博</a></li>
+				</ul>
+				<a class="help_more a" target="_blank" href="../findPW/">密码丢失？找回密码</a>
+				<a class="help_more a" target="_blank" href="../login/">已有账号？立即登录</a>
+			</div>
+		</div>
+	</div>
+	<div class="footer width center hidden clear">
+		<span class="footer_icon background left"></span>
+		<p class="left">北京微梦创科网络技术有限公司</p>
+		<a class="a left" target="_blank">京网文[2011]0398-130号</a> <a
+			class="a left" target="_blank">京ICP备12002058号</a>
+		<div class="language">
+			<span>Copyright © 2009-2017 WEIBO</span> <select>
+				<option>简体中文</option>
+				<option>中文(台湾)</option>
+				<option>中文(香港)</option>
+				<option>English</option>
+			</select>
+		</div>
+	</div>
+</body>
+</html>

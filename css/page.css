@@ -1,0 +1,102 @@
+@charset="utf-8";
+*{font-family: "微软雅黑"}
+body{width: 100%; min-width: 600px; background: url(../img/reg_repeat_bg.png) repeat-x; background-attachment: fixed;}
+.width{width: 600px;}
+a:hover{color: #1296db;}
+li:hover a{color: #1296db;}
+li:hover{cursor: pointer;}
+.inp_font{font-family: "微软雅黑"; font-size: 14px;}
+.inp_style{display: block; box-shadow: 0px 1px 1px 0px #eaeaea inset; border: 1px solid #ccc; border-radius: 0 2px 2px 0; padding: 1px 0;}
+.top{width: 100%; height: 51px; position: fixed; background: rgba(256,256,256,0.8); top: 0; z-index: 10;}
+.top_space{width: 100%; height: 51px; position: relative; background-color: white;}
+.nav{width: 1100px;}
+.top_logo{width: 90px; height: 33px; background-image: url(../img/logo_big.png); margin: 7px 20px;}
+.search{width: 445px; padding: 4px 0 4px 10px; margin-top: 9px; background-color: #f2f2f5;
+    border: 1px solid #ccc;}
+.search input{width: 425px; height: 20px;}
+.search_icon{width: 20px; height: 20px; background-image: url(../img/search_icon.png);}
+.search_icon:hover{background-image: url(../img/search_focus.png); cursor: pointer;}
+.nav_bar{margin: 8px 11px 7px 0; line-height: 26px; float: right;}
+.nav_bar li{margin: 0 12px; cursor: pointer;}
+@media screen and (max-width: 1100px){
+   .nav{width: 750px;}
+   .search{width: 90px;}
+   .search input{width: 70px;}
+}
+@media screen and (max-width: 750px){
+   .nav{width: 600px;}
+   .search{display: none;}
+   .nav_bar li{margin: 0 3px; }
+}
+.nav_bar li span{width: 20px; height: 20px; margin: 3px; }
+.select{color: #1296db;}
+.combar{width: 82px; display: block; text-overflow: ellipsis; white-space: nowrap;}
+.icon_home{background-image: url(../img/icon_home.png);}
+.home:hover .icon_home{background-image: url(../img/icon_home_hover.png);}
+.icon_webo{background-image: url(../img/icon_webo.png);}
+.combar:hover .icon_webo{background-image: url(../img/icon_webo_hover.png);}
+.combar input{width:55px;line-height: 26px; text-overflow: ellipsis; white-space: nowrap; overflow:hidden;}
+.combar:hover input{color: #1296db;}
+.usercenter{visibility: hidden; width: 82px; top: 38px; opacity: 0; background-color: #f7f7f7; position: absolute; transition: 1s all ease;}
+.usercenter input{width: 82px; text-align: center; display: block; color: black; line-height: 24px; border-bottom: 1px solid #90c3e5;text-overflow: ellipsis; white-space: nowrap;}
+.usercenter input:hover{color: #1296db;}
+.icon_mycenter{background-image: url(../img/my_center.png);}
+.combar:hover .icon_mycenter{background-image: url(../img/my_center_hover.png);}
+.icon_care{background-image: url(../img/icon_care.png);}
+.combar:hover .icon_care{background-image: url(../img/icon_care_hover.png);}
+.combar:hover .icon_fav{background-image: url(../img/icon_fav_hover.png);}
+.content{margin-top: 15PX;}
+.publish{background: white;}
+.publish textarea{width: 568px; margin: 9px;}
+.pub_fun{width: 400px; margin: 0 0 10px 5px; line-height: 30px;}
+.pub_fun li{cursor: pointer;}
+.pub_fun li .img{display: none;}
+.imgshow{top: 30px;}
+.imgshow img{width: 120px; margin: 10px;  background-color: #fafafa; border: 1px solid #eaeaea;}
+.pub_fun span{margin: 5px;}
+.icon_img{width: 20px; height: 20px; background-image: url(../img/icon_img.png); }
+.pub_fun li:hover .icon_img{width: 20px; height: 20px; background-image: url(../img/icon_img_hover.png);}
+.pub_btn{width: 80px; float: right; line-height: 30px; margin: 0 20px 10px 0; opacity: 0.3;}
+.weibo_item{margin-top: 10px;}
+.weibo{padding-top: 20px; margin-bottom: 10px; background-color: white;}
+.weibo_tit{line-height: 40px; padding: 0 20px;}
+.head_img{width: 40px; height: 40px; background-image: url(../img/icon.png); margin-right: 10px;}
+.weibo_tit a{font-weight: bold;}
+.attention{float: right; line-height: 12px; cursor: pointer; margin-right: 20px;}
+.atten_btn{width: 56px; height: 28px; background-color: #8ccced; margin: 6px 0; color: white; text-align: center; border-radius: 5px; line-height: 28px; font-size: 12px; cursor: pointer;}
+.atten_btn:hover{background-color: #1296db;}
+.time{color: #808080; font-size: 12px; margin-left: 70px;}
+.weibo_cont{width: 480px; padding: 10px 0 10px 70px; line-height: 23px;}
+.weibo_cont a{color: #1296db;}
+.weibo_cont img{display: none; width: 200px; margin: 10x auto;}
+.weibo_handle{width: 604px; border-top: 1px solid #f2f2f5;}
+.weibo_handle li{width: 150px; text-align: center; margin: 7px 0; border-right: 1px solid #d9d9d9;}
+.weibo_handle li:hover .handle a{color: #1296db;}
+.handle{display: inline-block; line-height: 22px;}
+.handle span{width: 18px; height: 18px; margin: 2px 5px 2px 0;}
+.handle a{color: #808080; font-size: 12px;}
+.icon_fav{background-image: url(../img/icon_fav.png);}
+.fav:hover .icon_fav{background-image: url(../img/icon_fav_hover.png);}
+.icon_faved{background-image: url(../img/icon_fav_ed.png);}
+.icon_resend{background-image: url(../img/icon_resend.png);}
+.weibo_handle li:hover .icon_resend{background-image: url(../img/icon_resend_hover.png);}
+.icon_review{background-image: url(../img/icon_review.png);}
+.weibo_handle li:hover .icon_review{background-image: url(../img/icon_review_hover.png);}
+.icon_zan{background-image: url(../img/icon_zan.png);}
+.icon_zaned{background-image: url(../img/icon_zan_ed.png);}
+.zan:hover .icon_zan{background-image: url(../img/icon_zan_hover.png);}
+.zancount{line-height: 22px; text-indent: 5px; color: #808080;}
+.zan:hover .zancount{color: #1296db;}
+.review_area{background-color: #f2f2f5; border-top: 1px solid #d9d9d9; padding: 10px 0;}
+.review_pub{margin: 0 20px;}
+.review_pub .head_img{width: 30px; height: 30px;}
+.review_others .head_img{width: 30px; height: 30px;}
+.review_pub textarea{width: 400px; font-size: 14px; background-color: white; margin-top: 4px; border: 1px solid #ccc; text-indent: 2px;}
+.review_pub textarea:focus{border-color: #1296db;}
+.review_btn{width: 80px; float: right; line-height: 24px; margin-top: 3px; opacity: 0.3;}
+.review_others{margin: 10px 20px 0 20px; border-top: 1px solid #d9d9d9; padding-top: 5px;}
+.review_others a{width:100px;color: blue; line-height: 30px; font-size: 12px;}
+.review_others p{width:455px; padding-top: 7px; font-size: 12px; color: gray;}
+.review_others a span:last-child{width: 55px; text-overflow: ellipsis; white-space: nowrap; overflow:hidden;}
+.com{width: 475px;}
+.language{float: none; display: inline-block; text-align: center;}
