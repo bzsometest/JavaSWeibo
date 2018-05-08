@@ -1,5 +1,5 @@
 # JavaSWeibo
-<br/>菁英微博WEB版，开发语言JavaWeb
+<br/>菁英微博JavaWEB版，成都工业学院-课程设计
 <br/>在线预览：http://weibo.bzchao.com
 
 ## 主要功能
